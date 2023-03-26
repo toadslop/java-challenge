@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import jp.co.axa.apidemo.dto.EmployeeDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,4 +50,18 @@ public class Employee {
     @Column(name = "DEPARTMENT")
     private String department;
 
+    public static Employee fromDto(EmployeeDto employeeDto) {
+        Employee emp = new Employee();
+        emp.name = employeeDto.getName();
+        emp.department = employeeDto.getDepartment();
+        emp.salary = employeeDto.getSalary();
+      
+        return emp;
+    }
+
+    public void merge(Employee other) {
+        if (other.getName() != null) name = other.getName();
+        if (other.getDepartment() != null) department = other.getDepartment();
+        if (other.getSalary() != null) salary = other.getSalary();
+    }
 }
