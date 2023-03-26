@@ -16,7 +16,6 @@ class Cache<K, V> {
   }
 }
 
-
 public class LruCache<K, V> {
   private Deque<K> queue = new LinkedList<>();
   private Map<K, Cache<K, V>> map = new HashMap<>();
