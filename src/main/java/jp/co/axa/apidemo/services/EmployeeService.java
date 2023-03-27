@@ -24,7 +24,7 @@ public interface EmployeeService {
      * Saves a new employee to the database. TODO: does this do anything if the employee already
      * exists?
      */
-    public void saveEmployee(EmployeeDto employee);
+    public Employee saveEmployee(EmployeeDto employee);
 
     /**
      * Deletes the employee with the given employeeId;
@@ -34,5 +34,5 @@ public interface EmployeeService {
     /**
      * Updates the provided employee. TODO: what does this do if the employee doesn't exist?
      */
-    public void updateEmployee(EmployeeDto employee, long employeeId);
+    public Employee updateEmployee(EmployeeDto employee, long employeeId);
 }

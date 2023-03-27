@@ -2,8 +2,6 @@ package jp.co.axa.apidemo.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +23,6 @@ import jp.co.axa.apidemo.services.EmployeeService;
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
-
-    Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     private EmployeeService employeeService;
@@ -70,9 +66,8 @@ public class EmployeeController {
      * @param employee the {@link Employee} to save
      */
     @PostMapping("/employees")
-    public void saveEmployee(EmployeeDto employee) {
-        employeeService.saveEmployee(employee);
-        logger.info("Employee Saved Successfully");
+    public Employee saveEmployee(EmployeeDto employee) {
+        return employeeService.saveEmployee(employee);
     }
 
     /**
@@ -84,7 +79,6 @@ public class EmployeeController {
     @DeleteMapping("/employees/{employeeId}")
     public void deleteEmployee(@PathVariable(name = "employeeId") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
-        logger.info("Employee Deleted Successfully");
     }
 
     /**
@@ -94,9 +88,9 @@ public class EmployeeController {
      * @param employeeId the id number of the employee
      */
     @PutMapping("/employees/{employeeId}")
-    public void updateEmployee(@RequestBody EmployeeDto employee,
+    public Employee updateEmployee(@RequestBody EmployeeDto employee,
             @PathVariable(name = "employeeId") Long employeeId) {
-        employeeService.updateEmployee(employee, employeeId);
+        return employeeService.updateEmployee(employee, employeeId);
             
     }
 

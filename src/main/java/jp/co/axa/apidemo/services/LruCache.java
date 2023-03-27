@@ -21,7 +21,7 @@ public class LruCache<K, V> {
   private Map<K, Cache<K, V>> map = new HashMap<>();
   int maxCapacity;
 
-  LruCache(int capacity) {
+  public LruCache(int capacity) {
     maxCapacity = capacity;
   }
 
@@ -53,5 +53,9 @@ public class LruCache<K, V> {
   public void remove(K key) {
     map.remove(key);
     queue.remove(key);
+  }
+
+  public int size() {
+    return map.size();
   }
 }

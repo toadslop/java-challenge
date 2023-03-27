@@ -37,10 +37,11 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findById(employeeId);
     }
 
-    public void saveEmployee(EmployeeDto employee) {
+    public Employee saveEmployee(EmployeeDto employee) {
         Employee emp = Employee.fromDto(employee);
         Employee saved = employeeRepository.save(emp);
         cache.put(saved.getId(), saved);
+        return saved;
     }
 
     public void deleteEmployee(Long employeeId){
@@ -48,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         cache.remove(employeeId);
     }
 
-    public void updateEmployee(EmployeeDto employee, long employeeId) {
+    public Employee updateEmployee(EmployeeDto employee, long employeeId) {
         Optional<Employee> optEmp = employeeRepository.findById(employeeId);
         Employee finalEmployee;
         if (optEmp.isPresent()) {
@@ -62,5 +63,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
 
         cache.put(finalEmployee.getId(), finalEmployee);
+        return finalEmployee;
     }
 }
