@@ -29,6 +29,8 @@ public class ApiDemoApplicationTests {
 
 	private Dotenv dotenv = Dotenv.load();
 
+	private String auth = getAuth();
+
 	@Autowired
 	private EmployeeRepository repository;
 
@@ -40,7 +42,7 @@ public class ApiDemoApplicationTests {
 		createTestEmployee("Bob", "Finance", 20000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees")
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -53,7 +55,7 @@ public class ApiDemoApplicationTests {
 		createTestEmployee("Sally", "HR", 30000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees")
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -70,7 +72,7 @@ public class ApiDemoApplicationTests {
 		content.put("name", "Barbara");
 
 		mvc.perform(MockMvcRequestBuilders.put("/api/v1/employees/" + emp.getId())
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.content(new JSONObject(content).toJSONString()).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
@@ -84,7 +86,7 @@ public class ApiDemoApplicationTests {
 		Employee emp = createTestEmployee("Sally", "HR", 30000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/" + emp.getId())
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -97,7 +99,7 @@ public class ApiDemoApplicationTests {
 	public void createdNewEmployee() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/employees").param("name", "Sally")
 				.param("salary", "20000").param("department", "HR")
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -111,11 +113,11 @@ public class ApiDemoApplicationTests {
 		Employee emp = createTestEmployee("Bob", "Finance", 20000);
 		createTestEmployee("Sally", "HR", 30000);
 		mvc.perform(MockMvcRequestBuilders.delete("/api/v1/employees/" + emp.getId())
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON));
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/" + emp.getId())
-				.header("Authorization", getAuth())
+				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
