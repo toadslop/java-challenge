@@ -1,56 +1,29 @@
-# How to use this spring-boot project
+# Sample Employee Api
 
-- Install packages with `mvn package`
-- Run `mvn spring-boot:run` for starting the application (or use your IDE)
+## Setup
 
-Application (with the embedded H2 database) is ready to be used ! You can access the url below for testing it :
+To run this application, you'll need to create a .env folder in the application root.
+Inside the file, provide the variables ADMIN_USER (the username of the admin user)
+and ADMIN_PASS (the password of the admin user.) Once this is done, you'll be able
+to make authenticated requests with a Basic Authorization header.
 
-- Swagger UI : <http://localhost:8080/swagger-ui.html>
-- H2 UI : <http://localhost:8080/h2-console>
+To format the header properly, base64 encode your username and password in this format: `username:password`.
 
-> Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
+After that, construct the header as follows: `Authorization: Basic YWRtaW46cGFzc3dvcmQ=`.
 
-## Instructions
+After that, you can run the following commands to create, read, update, and delete users.
 
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
+```bash
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/api/v1/employees' -H "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
 
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests (DONE)
-  - Change syntax (DONE)
-  - Protect controller end points (DONE)
-  - Add caching logic for database calls (DONE)
-  - Improve doc and comments <-- TODO
-  - Fix any bug you might find (DONE)
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' 'http://localhost:8080/api/v1/employees?id=0&name=Sally&salary=200000&department=Finance' --header "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
 
-### Restrictions
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/api/v1/employees/1' -H "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
 
-- use java 8
+curl -X PUT --header 'Content-Type: application/json' --header 'Accept: */*' -d '{"name": "Billy" }' 'http://localhost:8080/api/v1/employees/1' --header "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
 
-### What we will look for
-
-- Readability of your code
-- Documentation
-- Comments in your code
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
-
-#### Your experience in Java
-
-Please let us know more about your Java experience in a few sentences. For example:
-
-- I have 3 years experience in Java and I started to use Spring Boot from last year
-- I'm a beginner and just recently learned Spring Boot
-- I know Spring Boot very well and have been using it for many years
-
-## My Comments
+curl -X DELETE --header 'Accept: */*' 'http://localhost:8080/api/v1/employees/1' --header "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
+```
 
 ### If I Had More Time
 
@@ -58,6 +31,10 @@ If I had more time I would...
 
 - implement more robust authentication
 - set up pagination for the getEmployees endpoint
+- user docker-compose to set up a real database
+- add search and filter parameters
+- allow field limiting
+- error handling: I only handle a couple error cases but all operations against the database are fallible and so proper handling should be implemented
 
 ### Experience in Java
 
