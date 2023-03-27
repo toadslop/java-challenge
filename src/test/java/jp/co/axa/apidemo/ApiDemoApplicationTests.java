@@ -1,5 +1,6 @@
 package jp.co.axa.apidemo;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import io.github.cdimascio.dotenv.Dotenv;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
 import net.minidev.json.JSONObject;
@@ -24,6 +26,8 @@ import net.minidev.json.JSONObject;
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ApiDemoApplicationTests {
+
+	private Dotenv dotenv = Dotenv.load();
 
 	@Autowired
 	private EmployeeRepository repository;
@@ -36,7 +40,7 @@ public class ApiDemoApplicationTests {
 		createTestEmployee("Bob", "Finance", 20000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees")
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -49,7 +53,7 @@ public class ApiDemoApplicationTests {
 		createTestEmployee("Sally", "HR", 30000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees")
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -66,7 +70,7 @@ public class ApiDemoApplicationTests {
 		content.put("name", "Barbara");
 
 		mvc.perform(MockMvcRequestBuilders.put("/api/v1/employees/" + emp.getId())
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.content(new JSONObject(content).toJSONString()).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
@@ -80,7 +84,7 @@ public class ApiDemoApplicationTests {
 		Employee emp = createTestEmployee("Sally", "HR", 30000);
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/" + emp.getId())
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -93,7 +97,7 @@ public class ApiDemoApplicationTests {
 	public void createdNewEmployee() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/employees").param("name", "Sally")
 				.param("salary", "20000").param("department", "HR")
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(
 						MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -107,11 +111,11 @@ public class ApiDemoApplicationTests {
 		Employee emp = createTestEmployee("Bob", "Finance", 20000);
 		createTestEmployee("Sally", "HR", 30000);
 		mvc.perform(MockMvcRequestBuilders.delete("/api/v1/employees/" + emp.getId())
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON));
 
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/" + emp.getId())
-				.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=")
+				.header("Authorization", getAuth())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
@@ -123,6 +127,12 @@ public class ApiDemoApplicationTests {
 		return repository.save(emp);
 	}
 
-
+	public String getAuth() {
+		String adminUser = dotenv.get("ADMIN_USER");
+		String adminPass = dotenv.get("ADMIN_PASS");
+		String formatted = adminUser + ":" + adminPass;
+		String encoded = Base64.getEncoder().encodeToString(formatted.getBytes());
+		return "Basic " + encoded;
+	}
 
 }

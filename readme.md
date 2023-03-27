@@ -35,6 +35,7 @@ If I had more time I would...
 - add search and filter parameters
 - allow field limiting
 - error handling: I only handle a couple error cases but all operations against the database are fallible and so proper handling should be implemented
+- create separate test config and test admin user
 
 ### Experience in Java
 
