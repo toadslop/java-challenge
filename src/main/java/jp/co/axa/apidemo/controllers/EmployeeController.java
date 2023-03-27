@@ -18,26 +18,32 @@ import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.services.EmployeeService;
 
 /**
- * Controller for the employee api. Routes incoming requests to the proper repository methods.
+ * This controller defines the API interface for the the Employee Api and routes requests to the
+ * proper handler methods.
  */
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
 
+    /**
+     * @see jp.co.axa.apidemo.services.EmployeeServiceImpl
+     */
     @Autowired
     private EmployeeService employeeService;
 
     /**
-     * Sets a reference to the employee service.
+     * Sets a reference to the {@link jp.co.axa.apidemo.services.EmployeeService}.
+     * 
+     * @param employeeService {@link jp.co.axa.apidemo.services.EmployeeService}
      */
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     /**
-     * Api endpoing returning a list of{@link Employee} instances.
+     * Api endpoing returning a list of {@link Employee} instances.
      * 
-     * @return a List of {@link Employee} instances
+     * @return a {@link List} of {@link Employee} instances
      */
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
@@ -45,9 +51,9 @@ public class EmployeeController {
     }
 
     /**
-     * Api endpoing returning a list of employees.
+     * Api endpoint accepting an employee id url param and returning the employee if found.
      * 
-     * @param employeeId the id number of the employee
+     * @param employeeId the id number of the {@link Employee}
      * @return an instance of {@link Employee}
      */
     @GetMapping("/employees/{employeeId}")
@@ -61,9 +67,10 @@ public class EmployeeController {
     }
 
     /**
-     * Save information about a new employee.
+     * Save information about a new {@link Employee}.
      * 
      * @param employee the {@link Employee} to save
+     * @return the newly saved {@link Employee}
      */
     @PostMapping("/employees")
     public Employee saveEmployee(EmployeeDto employee) {
@@ -86,12 +93,13 @@ public class EmployeeController {
      * exists.
      * 
      * @param employeeId the id number of the employee
+     * @return the updated employee {@link Employee}
      */
     @PutMapping("/employees/{employeeId}")
     public Employee updateEmployee(@RequestBody EmployeeDto employee,
             @PathVariable(name = "employeeId") Long employeeId) {
         return employeeService.updateEmployee(employee, employeeId);
-            
+
     }
 
 }
