@@ -50,6 +50,11 @@ public class Employee {
     @Column(name = "DEPARTMENT")
     private String department;
 
+    /**
+     * Creates a new instance of {@link Employee} from an {@link EmployeeDto}
+     * @param employeeDto an instance of {@link EmployeeDto}
+     * @return an instance of {@link Employee}
+     */
     public static Employee fromDto(EmployeeDto employeeDto) {
         Employee emp = new Employee();
         emp.name = employeeDto.getName();
@@ -59,6 +64,11 @@ public class Employee {
         return emp;
     }
 
+    /**
+     * Updates one {@link Employee} with the contents of another. If the field in
+     * the other employee is null, the original employee's field is not updated.
+     * @param other an instance of {@link Employee} to merge
+     */
     public void merge(Employee other) {
         if (other.getName() != null) name = other.getName();
         if (other.getDepartment() != null) department = other.getDepartment();
