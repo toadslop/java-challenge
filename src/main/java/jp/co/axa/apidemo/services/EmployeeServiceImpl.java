@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jp.co.axa.apidemo.dto.EmployeeDto;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
+import jp.co.axa.apidemo.util.LruCache;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -26,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     public List<Employee> retrieveEmployees() {
         List<Employee> employees = employeeRepository.findAll();
-        employees.stream().limit(cache.maxCapacity).forEach(emp -> cache.put(emp.getId(), emp));
+        employees.stream().limit(cache.getMaxCapacity()).forEach(emp -> cache.put(emp.getId(), emp));
         return employees;
     }
 

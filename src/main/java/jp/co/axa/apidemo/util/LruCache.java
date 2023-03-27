@@ -1,4 +1,4 @@
-package jp.co.axa.apidemo.services;
+package jp.co.axa.apidemo.util;
 
 import java.util.Deque;
 import java.util.HashMap;
@@ -19,10 +19,14 @@ class Cache<K, V> {
 public class LruCache<K, V> {
   private Deque<K> queue = new LinkedList<>();
   private Map<K, Cache<K, V>> map = new HashMap<>();
-  int maxCapacity;
+  private int maxCapacity;
 
   public LruCache(int capacity) {
     maxCapacity = capacity;
+  }
+
+  public int getMaxCapacity() {
+    return maxCapacity;
   }
 
   public Optional<V> get(K key) {

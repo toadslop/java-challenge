@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import jp.co.axa.apidemo.services.LruCache;
+import jp.co.axa.apidemo.util.LruCache;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
