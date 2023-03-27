@@ -21,7 +21,7 @@ Application (with the embedded H2 database) is ready to be used ! You can access
 - Enhance the code in any ways you can see, you are free! Some possibilities:
   - Add tests <-- TODO
   - Change syntax (DONE)
-  - Protect controller end points <-- TODO
+  - Protect controller end points (DONE)
   - Add caching logic for database calls (DONE)
   - Improve doc and comments <-- TODO
   - Fix any bug you might find (DONE)
