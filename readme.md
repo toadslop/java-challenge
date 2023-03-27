@@ -19,7 +19,7 @@ Application (with the embedded H2 database) is ready to be used ! You can access
 - commit and push
 
 - Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests <-- TODO
+  - Add tests (DONE)
   - Change syntax (DONE)
   - Protect controller end points (DONE)
   - Add caching logic for database calls (DONE)
@@ -49,3 +49,23 @@ Please let us know more about your Java experience in a few sentences. For examp
 - I have 3 years experience in Java and I started to use Spring Boot from last year
 - I'm a beginner and just recently learned Spring Boot
 - I know Spring Boot very well and have been using it for many years
+
+## My Comments
+
+### If I Had More Time
+
+If I had more time I would...
+
+- implement more robust authentication
+- set up pagination for the getEmployees endpoint
+
+### Experience in Java
+
+I've used Java as a secondary language at work for about 3 years. By secondary langauge, I
+mean that it's not the language I use every day but from time to time I have to use it.
+For example, at my current job our core application is written in Java. Mainly I work on
+extensions, which are microservices (can use any language but usually TypeScript) and
+microfrontends (TypeScript). Nonetheless, best practices in Java are the same in any language.
+If I don't know how to do something in Java I still know what I need to know, so I can
+look it up. This makes me slower than someone who uses Java every day, but it does not mean
+my code is worse.
