@@ -7,6 +7,13 @@ Inside the file, provide the variables ADMIN_USER (the username of the admin use
 and ADMIN_PASS (the password of the admin user.) Once this is done, you'll be able
 to make authenticated requests with a Basic Authorization header.
 
+For example, the file might look like this:
+
+```txt
+ADMIN_USER=admin
+ADMIN_PASS=password
+```
+
 To format the header properly, base64 encode your username and password in this format: `username:password`.
 
 After that, construct the header as follows: `Authorization: Basic YWRtaW46cGFzc3dvcmQ=`.
